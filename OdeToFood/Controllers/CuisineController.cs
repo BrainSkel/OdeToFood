@@ -7,8 +7,10 @@ namespace OdeToFood.Controllers
     {
         public IActionResult Search( string name="UnKnown")
         {
-            var message = HtmlEncoder.Default.Encode(name); 
-            return Content(name);
+            var message = HtmlEncoder.Default.Encode(name);
+            //return Content(name);
+            //return new EmptyResult();
+            return File("/css/site.css", "text/css");
         }
     }
 }
