@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Filters;
+using System;
 using System.Text.Encodings.Web;
 
 namespace OdeToFood.Controllers
@@ -12,6 +13,8 @@ namespace OdeToFood.Controllers
         public IActionResult Search( string name="UnKnown")
         {
             var message = HtmlEncoder.Default.Encode(name);
+            throw new Exception("Something terrible has happened:(");
+            return Content(message);
             //return Content(name);
             //return new EmptyResult();
             //return File("/css/site.css", "text/css");
@@ -19,7 +22,7 @@ namespace OdeToFood.Controllers
 
             //return Redirect("https://www.tthk.ee");
             //return RedirectPermanent("https://www.tthk.ee");
-            return RedirectToRoute("default", new { controller= "Home",action = "About"});
+            //return RedirectToRoute("default", new { controller= "Home",action = "About"});
 
         
         }
