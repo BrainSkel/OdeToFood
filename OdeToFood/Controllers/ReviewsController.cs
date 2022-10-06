@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OdeToFood.Controllers
 {
@@ -10,12 +11,12 @@ namespace OdeToFood.Controllers
         // GET: ReviewsController
         public ActionResult Index()
         {
-
             var model =
                 from r in _reviews
                 orderby r.Country
                 select r;
-            return View();
+
+            return View(model);
         }
 
         // GET: ReviewsController/Details/5

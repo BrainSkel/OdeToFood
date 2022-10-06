@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OdeToFood.Models;
 
 namespace OdeToFood.Data
 {
@@ -12,5 +13,6 @@ namespace OdeToFood.Data
             : base(options)
         {
         }
+        public DbSet<OdeToFood.Models.RestaurantReview> RestaurantReview { get; set; }
     }
 }
