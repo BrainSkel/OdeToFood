@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OdeToFood.Controllers
 {
@@ -49,17 +50,24 @@ namespace OdeToFood.Controllers
         // GET: ReviewsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var review = _reviews.Single( r => r.Id == id );
+            return View(review);
         }
 
         // POST: ReviewsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var review = _reviews.Single(r => r.Id == id);
+                if (await TryUpdateModelAsync(review))
+                {
+                    return RedirectToAction(nameof(Index));
+
+                }
+                return View(review);
             }
             catch
             {

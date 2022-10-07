@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 @section featured {
-    We are showing the latest @Model.Count()
+    We are showing the latest @Model.Count() reviews
 }
 
 @foreach (var item in Model) {
@@ -17,9 +17,14 @@
         <h4>@item.Name</h4>
         <span>@item.Rating</span>
         <p>@item.City, @item.Country</p>
+        <span class="text-right">
+            @Html.ActionLink("Edit", "Edit", new {id=item.Id})
+        </span>
     </div>
 }
 
+
+
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a asp-action="Create">Create new</a>
 </p>
