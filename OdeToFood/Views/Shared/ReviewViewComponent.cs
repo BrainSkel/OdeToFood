@@ -12,7 +12,7 @@ namespace OdeToFood.Views.Shared
         {
 
         }
-        public async Task <IViewComponentResult> InvokeAsync(List<RestaurantReview> reviews)
+        public IViewComponentResult Invoke(List<RestaurantReview> reviews)
         {
             var bestReview = from r in reviews
                              orderby r.Rating descending

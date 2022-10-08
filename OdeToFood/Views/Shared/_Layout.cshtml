@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using OdeToFood.Controllers
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -48,6 +49,9 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+    </div>
+    <div>
+        @await Component.InvokeAsync("BestReview", new{reviews=OdeToFood.Controllers.ReviewsController._reviews})
     </div>
 
     <footer class="border-top footer text-muted">
