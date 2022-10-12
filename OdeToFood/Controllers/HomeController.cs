@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OdeToFood.Data;
 using OdeToFood.Models;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,21 @@ namespace OdeToFood.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly ApplicationDbContext _db;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext)
         {
+            _db = dbContext;
             _logger = logger;
         }
 
 
         public IActionResult Index()
         {
-            var controller = RouteData.Values["controller"];
-            var action = RouteData.Values["action"];
-            var id= RouteData.Values["id"];
-
-            ViewBag.Message = $"{controller}::{action} {id}";
-            return View();
+            var model = _db.Restaurants.ToList();
+            return View(model);
         }
 
         public IActionResult Privacy()

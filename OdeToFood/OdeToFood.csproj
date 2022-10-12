@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="ViewComponents\" />
+    <Folder Include="Views\Reviews\" />
   </ItemGroup>
 
 </Project>

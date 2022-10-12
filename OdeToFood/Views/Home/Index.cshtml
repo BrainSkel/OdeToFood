@@ -1,7 +1,17 @@
-﻿@{
+﻿@model IEnumerable<Restaurant>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">@ViewBag.Message</h1>
 </div>
+
+@foreach (var item in Model) {
+    <div>
+        <h4>@item.Name</h4>
+        <div>@item.City, @item.Country</div>
+        <hr />
+    </div>
+
+}
