@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OdeToFood.Data;
 
-namespace OdeToFood.Migrations
+namespace DefaultName.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20221012104350_Create_RestaurantAndReviews")]
