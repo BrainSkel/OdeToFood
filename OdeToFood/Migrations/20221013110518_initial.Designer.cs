@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OdeToFood.Data;
 
-namespace DefaultName.Migrations
+namespace OdeToFood.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221012104350_Create_RestaurantAndReviews")]
-    partial class Create_RestaurantAndReviews
+    [Migration("20221013110518_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -231,8 +231,8 @@ namespace DefaultName.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Country")
-                        .HasColumnType("int");
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
