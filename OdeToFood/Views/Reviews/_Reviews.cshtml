@@ -7,21 +7,25 @@
 				@Html.DisplayNameFor(model => model.Rating)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Rating)
+				@Html.DisplayNameFor(model => model.Body)
 			</th>
 		</tr>
 	</thead>
+	<tbody>
+		@foreach (var item in Model) {
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Rating)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Body)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+
 </table>
-	@foreach (var item in Model) {
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Rating)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Body)
-			</td>
-			<td>
-				<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-			</td>
-		</tr>
-	}
+
