@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OdeToFood.Data;
 using OdeToFood.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace OdeToFood.Controllers 
@@ -28,6 +29,28 @@ namespace OdeToFood.Controllers
                  return NotFound();
             }
             return View(restaurant);
+
+        }
+
+        [HttpGet]
+        public ActionResult Create(int restaurantId)
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult Create(RestaurantReview review)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.RestaurantReviews.Add(review);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index), new { id= review.RestaurantId});
+
+            }
+            return View(review);
+
 
         }
     }
