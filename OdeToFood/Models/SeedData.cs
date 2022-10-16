@@ -22,13 +22,13 @@ namespace OdeToFood.Models
                 context.Restaurants.AddRange(
                     new Restaurant
                     {
-                        Name = "Hello",
+                        Name = "SehBuger",
                         City = "Elo",
                         Country = "Ameruca"
                     },
                     new Restaurant
                     {
-                        Name = "GoodBoy",
+                        Name = "Good Boy",
                         City = "Arel",
                         Country = "Estoska"
                     }

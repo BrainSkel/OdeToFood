@@ -53,7 +53,30 @@ namespace OdeToFood.Controllers
 
 
         }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var model = _context.RestaurantReviews.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Edit(RestaurantReview review)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.RestaurantReviews.Update(review);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index), new { id = review.RestaurantId });
+
+            }
+            return View(review);
+
+
+        }
+
     }
+
 
 
 }
