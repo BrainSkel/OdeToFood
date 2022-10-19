@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using OdeToFood.Data;
 using OdeToFood.Models;
+using OdeToFood.Models.ViewModels;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OdeToFood.Controllers 
 { 
-
-
-
     public class ReviewsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -54,22 +53,51 @@ namespace OdeToFood.Controllers
 
         }
 
+
+
         [HttpGet]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int Id)
         {
-            var model = _context.RestaurantReviews.Find(id);
+            var model = _context.RestaurantReviews.Find(Id);
             return View(model);
         }
+
+
         [HttpPost]
-        public ActionResult Edit(RestaurantReview review)
+        public async Task<IActionResult> Edit(int? id, RestaurantReviewEditViewModel review)
         {
-            if (ModelState.IsValid)
+            if (id != review.Id)
             {
-                _context.RestaurantReviews.Update(review);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index), new { id = review.RestaurantId });
+                return NotFound();
 
             }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var currentReview = await _context.RestaurantReviews.FindAsync(id);
+                    currentReview.Body = review.Body;
+                    currentReview.Rating = review.Rating;
+                    _context.Entry(currentReview).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!_context.RestaurantReviews.Any(r => r.Id == id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+
+                    }
+                }
+
+            }
+
             return View(review);
 
 
