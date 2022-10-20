@@ -3,19 +3,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<form method="get">
+@*<form method="get">
     <input type="search" name="searchTerm" />
     <input type="submit" value="Search By Name" />
-</form>
+</form>*@
 
-<div class="text-center">
-    <h1 class="display-4">@ViewBag.Message</h1>
-</div>
-
-@foreach (var item in Model) {
-    <div>
-        <h4>@item.Name</h4>
-        <div>@item.City, @item.Country</div>
-    </div>
-
+@using (Html.AjaxBeginForm(new AjaxOptions
+            {
+                HttpMethod = "get",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "restaurantList"
+            }))
+            {
+    <input type="search" name="searchTerm" />
+    <input type="submit" value="Search By Name" />
 }
+
+<parital name= "_Restaurant" model="Model" />

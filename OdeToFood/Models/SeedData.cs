@@ -33,6 +33,18 @@ namespace OdeToFood.Models
                         Country = "Estoska"
                     }
                 );
+
+                for(int i = 0; i < 1000; i++)
+                {
+                    context.Restaurants.AddRange(
+                        new Restaurant
+                        {
+                            Name = $"{i}. eatery",
+                            City = "Nowhere",
+                            Country = "UaS"
+                        });
+
+                }
                 context.SaveChanges();
 
             }

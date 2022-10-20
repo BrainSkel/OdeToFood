@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore.Unobtrusive.Ajax;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OdeToFood.Data;
 using OdeToFood.Models;
@@ -39,6 +40,10 @@ namespace OdeToFood.Controllers
                 }
                 );
             //var model = _db.Restaurants.ToList();
+            if(Request.IsAjaxRequest())
+            {
+                return PartialView("_Restaurants", model);
+            }
             return View(model);
         }
 

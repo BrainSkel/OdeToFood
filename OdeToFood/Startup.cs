@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore.Unobtrusive;
+using AspNetCore.Unobtrusive.Ajax;
 
 namespace OdeToFood
 {
@@ -31,6 +33,7 @@ namespace OdeToFood
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddUnobtrusiveAjax();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -53,7 +56,7 @@ namespace OdeToFood
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseUnobtrusiveAjax();
             app.UseRouting();
 
             app.UseAuthentication();
