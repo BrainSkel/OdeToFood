@@ -9,16 +9,17 @@ $(function () {
         var $form = $(this);
 
         var options = {
-            url: $form.atrr("action"),
+            url: $form.attr("action"),
             type: $form.attr("method"),
             data: $form.serialize()
-        }
+        };
 
         $.ajax(options).done(function (data) {
             var $target = $($form.attr("data-oft-target"));
             var $newHtml = $(data)
             $target.replaceWith($newHtml)
             $newHtml.effect("highlight")
+
         });
 
         return false;
@@ -34,9 +35,10 @@ $(function () {
     var createAutocomplete = function () {
         var $input = $(this);
         var options = {
-            source: $input.attr("data-otf-autocomplete")
-            select: submitAutocompleteForm
+            source: $input.attr("data-otf-autocomplete"),
+            select: submitAutoCompleteForm
         }
+        $input.autocomplete(options);
 
     }
 

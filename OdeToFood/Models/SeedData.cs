@@ -39,7 +39,7 @@ namespace OdeToFood.Models
                     context.Restaurants.AddRange(
                         new Restaurant
                         {
-                            Name = $"{i}. eatery",
+                            Name = $"{i}",
                             City = "Nowhere",
                             Country = "UaS"
                         });

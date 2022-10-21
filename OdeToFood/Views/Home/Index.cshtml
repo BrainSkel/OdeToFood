@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Restaurant>
+﻿@model IPagedList<RestaurantListViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <form asp-action="Index" method="get" data-otf-ajax="true" data-otf-target="#restaurantList">
-    <div class="fomr-group">
+    <div class="form-group">
         <div class="ui-autocomplete">
             <input class="form-control" type="search" name="searchTerm" value="" data-otf-autocomplete="@Url.Action("Autocomplete")" />
             <input class="btn btn-dark" type="submit" value="Search By Name" />

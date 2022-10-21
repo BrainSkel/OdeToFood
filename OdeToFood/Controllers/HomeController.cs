@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Unobtrusive.Ajax;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OdeToFood.Data;
 using OdeToFood.Models;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace OdeToFood.Controllers
 {
@@ -33,12 +35,11 @@ namespace OdeToFood.Controllers
         }
 
 
-        public IActionResult Index(string searchTerm = null)
+        public IActionResult Index(string searchTerm = null, int page = 1)
         {
             var model = _db.Restaurants
                 .OrderByDescending(r => r.Reviews.Average(review => review.Rating))
                 .Where(r => searchTerm == null || r.Name.StartsWith(searchTerm))
-                .Take(10)
                 .Select(r => new Restaurant
                 {
                     Id = r.Id,
@@ -47,7 +48,8 @@ namespace OdeToFood.Controllers
                     Country = r.Country
 
                 }
-                );
+                ).ToPagedList(page, 10);
+
             //var model = _db.Restaurants.ToList();
             if(Request.IsAjaxRequest())
             {
