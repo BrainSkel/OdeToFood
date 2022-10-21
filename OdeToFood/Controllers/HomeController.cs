@@ -23,6 +23,15 @@ namespace OdeToFood.Controllers
             _logger = logger;
         }
 
+        public IActionResult Autocomplete(string term)
+        {
+            var model = _db.Restaurants
+                .Where(r => r.Name.StartsWith(term))
+                .Take(10)
+                .Select(r => new { label = r.Name });
+            return Json(model);
+        }
+
 
         public IActionResult Index(string searchTerm = null)
         {
