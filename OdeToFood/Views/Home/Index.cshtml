@@ -3,12 +3,12 @@
     ViewData["Title"] = "Home Page";
 }
 
-@*<form method="get">
+<form asp-action="Index" method="get" data-otf-ajax="true" data-otf-target="#restaurantList">
     <input type="search" name="searchTerm" />
     <input type="submit" value="Search By Name" />
-</form>*@
+</form>
 
-@using (Html.AjaxBeginForm(new AjaxOptions
+@*@using (Html.AjaxBeginForm(new AjaxOptions
             {
                 HttpMethod = "get",
                 InsertionMode = InsertionMode.Replace,
@@ -17,6 +17,6 @@
             {
     <input type="search" name="searchTerm" />
     <input type="submit" value="Search By Name" />
-}
+}*@
 
 <parital name= "_Restaurant" model="Model" />
