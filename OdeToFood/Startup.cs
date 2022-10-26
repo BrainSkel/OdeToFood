@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Unobtrusive;
 using AspNetCore.Unobtrusive.Ajax;
+using OdeToFood.Models;
 
 namespace OdeToFood
 {
@@ -35,7 +36,7 @@ namespace OdeToFood
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddUnobtrusiveAjax();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<OdeToFoodUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }
