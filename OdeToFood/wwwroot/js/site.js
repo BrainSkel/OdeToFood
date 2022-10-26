@@ -25,22 +25,21 @@ $(function () {
         return false;
     };
 
-    var submitAutoCompleteForm = function (event, ui) {
-        var $input = $(this)
+    var submitAutocompleteForm = function (event, ui) {
+        var $input = $(this);
         $input.val(ui.item.label);
         var $form = $input.parents("form:first");
-        $form.submit()
-    }
+        $form.submit();
+    };
 
     var createAutocomplete = function () {
         var $input = $(this);
         var options = {
             source: $input.attr("data-otf-autocomplete"),
-            select: submitAutoCompleteForm
-        }
+            select: submitAutocompleteForm
+        };
         $input.autocomplete(options);
-
-    }
+    };
 
     var getPage = function () {
         var $a = $(this);
