@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal
-@inject SignInManager<IdentityUser> SignInManager
+@using OdeToFood.Models
+@inject SignInManager<OdeToFoodUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
