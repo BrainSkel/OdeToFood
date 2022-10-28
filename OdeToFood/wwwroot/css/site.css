@@ -31,7 +31,7 @@ header li {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #CECECE;
+    color: gold;
     background-color: #CECECE;
     border-color: #1861ac;
 }

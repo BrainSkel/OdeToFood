@@ -15,7 +15,7 @@ $(function () {
         };
 
         $.ajax(options).done(function (data) {
-            var $target = $($form.attr("data-oft-target"));
+            var $target = $($form.attr("data-otf-target"));
             var $newHtml = $(data)
             $target.replaceWith($newHtml)
             $newHtml.effect("highlight")
