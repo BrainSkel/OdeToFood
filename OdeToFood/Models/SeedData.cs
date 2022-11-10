@@ -4,11 +4,13 @@ using System;
 using System.Linq;
 using OdeToFood.Models;
 using OdeToFood.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace OdeToFood.Models
 {
     public static class SeedData
     {
+        public const string ROLE_ADMIN = "Admin";
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
@@ -43,12 +45,22 @@ namespace OdeToFood.Models
                             City = "Nowhere",
                             Country = "UaS"
                         });
-
                 }
                 context.SaveChanges();
-
             }
         }
-   
+        public static async void SeedIdentity(UserManager<OdeToFoodUser> userManager, RoleManager<OdeToFoodRole> roleManager)
+        {
+            var user = userManager.FindByNameAsync("hanne53rik@gmail.com").Result;
+            if (user == null)
+            {
+                user = new OdeToFoodUser();
+                user.Email = "hanne53rik@gmail.com";
+                user.EmailConfirmed = true;
+                user.UserName = "hanne53rik@gmail.com";
+                var password
+            }
+
+        }
     }
 }

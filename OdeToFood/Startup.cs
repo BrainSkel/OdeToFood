@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using AspNetCore.Unobtrusive;
 using AspNetCore.Unobtrusive.Ajax;
 using OdeToFood.Models;
+using Microsoft.Data.SqlClient;
 
 namespace OdeToFood
 {
@@ -36,7 +37,8 @@ namespace OdeToFood
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddUnobtrusiveAjax();
 
-            services.AddDefaultIdentity<OdeToFoodUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<OdeToFoodUser,OdeToFoodRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }
@@ -78,6 +80,43 @@ namespace OdeToFood
                             pattern: "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });
+        }
+
+        private void SetupAppData(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+
+            using var serviceScope = app
+                .ApplicationServices
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope();
+            using var userManager = serviceScope
+                .ServiceProvider
+                .GetService<UserManager<OdeToFoodUser>>();
+           using var roleManager = serviceScope
+                .ServiceProvider
+                .GetService<RoleManager<OdeToFoodRole>>();
+            using var context = serviceScope
+                .ServiceProvider.GetService<ApplicationDbContext>();
+
+            if (context == null)
+            {
+                throw new ApplicationException("Problem in services. Can not initialize ApplicationDbContext");
+            } while (true)
+            {
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.Database.CloseConnection();
+                    break;
+                }
+                catch (SqlException e)
+                {
+                    if (e.Message.Contains("The login failed.")) { break; }
+                    System.Threading.Thread.Sleep(1000);
+                }
+
+            }
+
         }
     }
 }
