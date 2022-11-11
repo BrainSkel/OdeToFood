@@ -5,6 +5,7 @@ using System.Linq;
 using OdeToFood.Models;
 using OdeToFood.Data;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace OdeToFood.Models
 {
@@ -49,7 +50,7 @@ namespace OdeToFood.Models
                 context.SaveChanges();
             }
         }
-        public static async void SeedIdentity(UserManager<OdeToFoodUser> userManager, RoleManager<OdeToFoodRole> roleManager)
+        public static async Task SeedIdentity(UserManager<OdeToFoodUser> userManager, RoleManager<OdeToFoodRole> roleManager)
         {
             var user = userManager.FindByNameAsync("hanne53rik@gmail.com").Result;
             if (user == null)
@@ -58,9 +59,28 @@ namespace OdeToFood.Models
                 user.Email = "hanne53rik@gmail.com";
                 user.EmailConfirmed = true;
                 user.UserName = "hanne53rik@gmail.com";
-                var password
+                var userResult = await userManager.CreateAsync(user);
+                if (!userResult.Succeeded)
+                {
+                    throw new Exception($"User creation failed: {userResult.Errors.FirstOrDefault()}");
+                }
+                await userManager.AddPasswordAsync(user, "Pa$$w0rd");
             }
+            var role = await roleManager.FindByNameAsync(ROLE_ADMIN);
+            if (role == null)
+            {
+                role = new OdeToFoodRole();
+                role.Name = ROLE_ADMIN;
+                role.NormalizedName = ROLE_ADMIN;
+                var roleResult = roleManager.CreateAsync(role).Result;
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception(roleResult.Errors.First().Description);
+                }
+            }
+            await userManager.AddToRoleAsync(user, ROLE_ADMIN);
 
         }
     }
 }
+

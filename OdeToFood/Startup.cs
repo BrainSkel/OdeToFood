@@ -46,6 +46,7 @@ namespace OdeToFood
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            SetupAppDataAsync(app, env);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -117,6 +118,33 @@ namespace OdeToFood
 
             }
 
+        }
+        private async Task SetupAppDataAsync(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var userManager = serviceScope.ServiceProvider.GetService<UserManager<OdeToFoodUser>>();
+            using var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<OdeToFoodRole>>();
+            using var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            if (context == null)
+            {
+                throw new ApplicationException("Problem in services. Can not initialize ApplicationDbContext");
+            }
+            while (true)
+            {
+                try
+                {
+                    context.Database.OpenConnection();
+                    context.Database.CloseConnection();
+                    break;
+                }
+                catch (SqlException e)
+                {
+                    if (e.Message.Contains("The login failed.")) { break; }
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+            await SeedData.SeedIdentity(userManager, roleManager);
+            context.SaveChanges();
         }
     }
 }
