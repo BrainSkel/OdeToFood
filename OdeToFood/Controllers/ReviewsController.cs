@@ -41,6 +41,7 @@ namespace OdeToFood.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(RestaurantReview review)
         {
             if (ModelState.IsValid)
@@ -66,6 +67,7 @@ namespace OdeToFood.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int? id, RestaurantReviewEditViewModel review)
         {
             if (id != review.Id)
